@@ -51,7 +51,7 @@ export const ChatPanel = ({
           </div>
           <div>
             <h2 className="text-blue-700 bg-primary-foreground text-base font-mono text-justify font-extrabold">Clio Ai</h2>
-            <p className="text-xs text-muted-foreground">Ask me anything about coding</p>
+            <p className="text-xs text-muted-foreground">Your Vibe Coding Platform</p>
           </div>
         </div>
         <Button variant="ghost" size="icon" onClick={onClearMessages} title="Clear chat" className="text-muted-foreground hover:text-foreground">
