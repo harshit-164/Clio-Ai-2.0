@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback, memo } from "react";
-import { AlertTriangle, Monitor } from "lucide-react";
+import { AlertTriangle, Monitor, Eye } from "lucide-react";
 import { ConsoleEntry } from "@/types/chat";
 interface LivePreviewProps {
   html: string;
@@ -150,7 +150,7 @@ export const LivePreview = memo(({
   if (!html) {
     return <div className="flex h-[calc(100vh-180px)] flex-col items-center justify-center bg-muted/30 text-center">
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-          <Monitor className="h-8 w-8 text-muted-foreground" />
+          <Eye className="h-8 w-8 text-muted-foreground" />
         </div>
         <h3 className="mb-2 font-medium text-foreground">No Preview Available</h3>
         <p className="max-w-sm text-sm text-muted-foreground">
