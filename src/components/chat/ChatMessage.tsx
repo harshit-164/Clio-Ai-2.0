@@ -2,6 +2,7 @@ import { User, Bot, Copy, Play, Check } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Message } from "@/types/chat";
+import { isPreviewableLanguage } from "@/lib/codeParser";
 import { cn } from "@/lib/utils";
 
 interface ChatMessageProps {
@@ -79,10 +80,10 @@ const MessageContent = ({ content, codeBlocks, onCodeSelect }: MessageContentPro
         const codeMatch = part.match(/```(\w+)?(?::(\w+))?\n([\s\S]*?)```/);
         
         if (codeMatch) {
-          const language = codeMatch[1] || "plaintext";
+          const language = (codeMatch[1] || "plaintext").toLowerCase();
           const modifier = codeMatch[2];
           const code = codeMatch[3].trim();
-          const isPreviewable = modifier === "preview" || language === "html";
+          const isPreviewable = modifier === "preview" || isPreviewableLanguage(language);
 
           return (
             <CodeBlockComponent
