@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { AlertTriangle, Monitor } from "lucide-react";
 import { ConsoleEntry } from "@/types/chat";
-
 interface LivePreviewProps {
   html: string;
   runCount: number;
@@ -9,13 +8,12 @@ interface LivePreviewProps {
   onRenderComplete?: () => void;
   onRenderError?: (error: string) => void;
 }
-
-export const LivePreview = memo(({ 
-  html, 
-  runCount, 
+export const LivePreview = memo(({
+  html,
+  runCount,
   onConsoleAdd,
   onRenderComplete,
-  onRenderError,
+  onRenderError
 }: LivePreviewProps) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [error, setError] = useState<string | null>(null);
@@ -27,10 +25,8 @@ export const LivePreview = memo(({
       setIsLoading(false);
       return;
     }
-
     setError(null);
     setIsLoading(true);
-
     try {
       // Inject console capture script with error handling
       const consoleScript = `
@@ -108,10 +104,8 @@ export const LivePreview = memo(({
       } else {
         modifiedHtml = consoleScript + html;
       }
-
       const iframe = iframeRef.current;
       const doc = iframe.contentDocument || iframe.contentWindow?.document;
-      
       if (doc) {
         doc.open();
         doc.write(modifiedHtml);
@@ -129,7 +123,6 @@ export const LivePreview = memo(({
       console.error("Preview render error:", errorMessage);
     }
   }, [html, onRenderError]);
-
   useEffect(() => {
     renderPreview();
   }, [html, runCount, renderPreview]);
@@ -141,7 +134,7 @@ export const LivePreview = memo(({
         if (event.data?.type === "console") {
           onConsoleAdd({
             type: event.data.consoleType || "log",
-            message: event.data.message || "",
+            message: event.data.message || ""
           });
         } else if (event.data?.type === "renderComplete") {
           onRenderComplete?.();
@@ -151,14 +144,11 @@ export const LivePreview = memo(({
         console.warn("Failed to process iframe message:", e);
       }
     };
-
     window.addEventListener("message", handleMessage);
     return () => window.removeEventListener("message", handleMessage);
   }, [onConsoleAdd, onRenderComplete]);
-
   if (!html) {
-    return (
-      <div className="flex h-[calc(100vh-180px)] flex-col items-center justify-center bg-muted/30 text-center">
+    return <div className="flex h-[calc(100vh-180px)] flex-col items-center justify-center bg-muted/30 text-center">
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
           <Monitor className="h-8 w-8 text-muted-foreground" />
         </div>
@@ -166,39 +156,25 @@ export const LivePreview = memo(({
         <p className="max-w-sm text-sm text-muted-foreground">
           Ask the AI to generate some HTML, CSS, or JavaScript code to see a live preview here.
         </p>
-      </div>
-    );
+      </div>;
   }
-
   if (error) {
-    return (
-      <div className="flex h-[calc(100vh-180px)] flex-col items-center justify-center bg-primary/5 text-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-          <Monitor className="h-8 w-8 text-primary" />
+    return <div className="flex h-[calc(100vh-70px)] flex-col items-center justify-center bg-destructive/5 text-center">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
+          <AlertTriangle className="h-8 w-8 text-destructive" />
         </div>
-        <h3 className="mb-2 font-medium text-foreground">Live Preview</h3>
-        <p className="max-w-sm text-sm text-muted-foreground">
-          To use this live preview window! Try our VibeCoder Bundle! Where you get 10 previews for a day!
+        <h3 className="mb-2 font-medium text-destructive">Preview Error</h3>
+        <p className="max-w-sm text-sm text-muted-foreground">{error}</p>
+        <p className="mt-2 text-xs text-muted-foreground">
+          The preview will automatically retry when code changes.
         </p>
-      </div>
-    );
+      </div>;
   }
-
-  return (
-    <div className="relative h-[calc(100vh-180px)] w-full">
-      {isLoading && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
+  return <div className="relative h-[calc(100vh-180px)] w-full">
+      {isLoading && <div className="absolute inset-0 z-10 flex items-center justify-center bg-background/80">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" />
-        </div>
-      )}
-      <iframe
-        ref={iframeRef}
-        className="h-full w-full border-t border-border bg-background"
-        sandbox="allow-scripts allow-modals"
-        title="Code Preview"
-      />
-    </div>
-  );
+        </div>}
+      <iframe ref={iframeRef} className="h-full w-full border-t border-border bg-background" sandbox="allow-scripts allow-modals" title="Code Preview" />
+    </div>;
 });
-
 LivePreview.displayName = "LivePreview";
