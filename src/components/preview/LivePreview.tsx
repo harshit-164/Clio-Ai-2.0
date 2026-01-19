@@ -172,14 +172,13 @@ export const LivePreview = memo(({
 
   if (error) {
     return (
-      <div className="flex h-[calc(100vh-180px)] flex-col items-center justify-center bg-destructive/5 text-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
-          <AlertTriangle className="h-8 w-8 text-destructive" />
+      <div className="flex h-[calc(100vh-180px)] flex-col items-center justify-center bg-primary/5 text-center">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
+          <Monitor className="h-8 w-8 text-primary" />
         </div>
-        <h3 className="mb-2 font-medium text-destructive">Preview Error</h3>
-        <p className="max-w-sm text-sm text-muted-foreground">{error}</p>
-        <p className="mt-2 text-xs text-muted-foreground">
-          The preview will automatically retry when code changes.
+        <h3 className="mb-2 font-medium text-foreground">Live Preview</h3>
+        <p className="max-w-sm text-sm text-muted-foreground">
+          To use this live preview window! Try our VibeCoder Bundle! Where you get 10 previews for a day!
         </p>
       </div>
     );
