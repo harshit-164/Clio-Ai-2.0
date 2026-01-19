@@ -45,7 +45,7 @@ export const ChatPanel = ({
   return <div className="flex h-full flex-col bg-card">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 text-sidebar-primary">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <Bot className="h-5 w-5 text-blue-600 bg-gray-900" />
           </div>
