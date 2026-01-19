@@ -163,7 +163,7 @@ export const LivePreview = memo(({
         <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
           <AlertTriangle className="h-8 w-8 text-destructive" />
         </div>
-        <h3 className="mb-2 font-medium text-destructive">Preview Error</h3>
+        <h3 className="mb-2 font-medium text-destructive">Live Preview</h3>
         <p className="max-w-sm text-sm text-muted-foreground">👀 Preview Unavailable in Sandbox Wanna see live preview in real time? Upgrade to Vibecoder Bundle - enjoy 10 previews per day🚀</p>
         <p className="mt-2 text-xs text-muted-foreground">
           The preview will automatically retry when code changes.
